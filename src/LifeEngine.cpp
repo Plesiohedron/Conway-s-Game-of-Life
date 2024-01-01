@@ -1,6 +1,7 @@
 #include "LifeEngine.h"
 
-LifeEngine::LifeEngine(int FieldWidth, int FieldHeight) : Number_of_Cells_in_Width(FieldWidth), Number_of_Cells_in_Height(FieldHeight) {
+LifeEngine::LifeEngine(int FieldWidth, int FieldHeight, bool Cyclicity)
+    : Number_of_Cells_in_Width(FieldWidth), Number_of_Cells_in_Height(FieldHeight), isCyclic(Cyclicity) {
     // std::pair<int, int> coordinates[] = {
     //     {3, 20}, {3, 21}, {3, 22}, {2, 22}, {1, 21},
     //     // {14, 11}, {15, 11}, {14, 12}, {13, 13}, {14, 13},
@@ -26,12 +27,26 @@ std::unordered_map<std::pair<int, int>, bool, pair_hash> LifeEngine::Calculate_N
         int y = cell.first.second;
         for (int i = -1; i <= 1; ++i) {
             for (int j = -1; j <= 1; ++j) {
-                int new_x = (x + i + Number_of_Cells_in_Width) % Number_of_Cells_in_Width;
-                int new_y = (y + j + Number_of_Cells_in_Height) % Number_of_Cells_in_Height;
-                if (!Auxiliary_Universe.count({new_x, new_y})) {
-                    int neighbors = Count_Neighbors(new_x, new_y);
-                    if (neighbors == 3) {
-                        Auxiliary_Universe[{new_x, new_y}] = true;
+                int new_x;
+                int new_y;
+                if (!isCyclic) {
+                    new_x = x + i;
+                    new_y = y + j;
+
+                    if (0 <= new_x && new_x <= Number_of_Cells_in_Width - 1 && 0 <= new_y && new_y <= Number_of_Cells_in_Height - 1) {
+                        if (!Auxiliary_Universe.count({new_x, new_y})) {
+                            int neighbors = Count_Neighbors(new_x, new_y);
+                            if (neighbors == 3)
+                                Auxiliary_Universe[{new_x, new_y}] = true;
+                        }
+                    }
+                } else {
+                    new_x = (x + i + Number_of_Cells_in_Width) % Number_of_Cells_in_Width;
+                    new_y = (y + j + Number_of_Cells_in_Height) % Number_of_Cells_in_Height;
+                    if (!Auxiliary_Universe.count({new_x, new_y})) {
+                        int neighbors = Count_Neighbors(new_x, new_y);
+                        if (neighbors == 3)
+                            Auxiliary_Universe[{new_x, new_y}] = true;
                     }
                 }
             }
@@ -42,11 +57,10 @@ std::unordered_map<std::pair<int, int>, bool, pair_hash> LifeEngine::Calculate_N
         int x = it->first.first;
         int y = it->first.second;
         int neighbors = Count_Neighbors(x, y);
-        if (Universe.count({x, y}) && Universe.at({x, y}) && (neighbors < 2 || neighbors > 3)) {
+        if (Universe.count({x, y}) && Universe.at({x, y}) && (neighbors < 2 || neighbors > 3))
             it = Auxiliary_Universe.erase(it);
-        } else {
+        else
             ++it;
-        }
     }
 
     return Auxiliary_Universe;

@@ -14,12 +14,14 @@ struct pair_hash {
 
 class LifeEngine {
 private:
-    int Number_of_Cells_in_Width = 0, Number_of_Cells_in_Height = 0;
+    int Number_of_Cells_in_Width = 2, Number_of_Cells_in_Height = 2;
+
+    bool isCyclic = false;
 
 public:
     std::unordered_map<std::pair<int, int>, bool, pair_hash> Universe;
 
-    LifeEngine(int FieldWidth, int FieldHeight);
+    LifeEngine(int FieldWidth, int FieldHeight, bool Cyclicity);
 
     std::unordered_map<std::pair<int, int>, bool, pair_hash> Calculate_Next_Generation();
     int Count_Neighbors(int x, int y);

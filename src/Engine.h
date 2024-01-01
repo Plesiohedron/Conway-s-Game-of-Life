@@ -42,7 +42,6 @@ private:
 
     bool Quit_Event(SDL_Event event);
     void Keys_Event(SDL_Event event);
-    void Generation_Pause_Event(SDL_Event event);
 
     bool Scale_Event(SDL_Event event);
     bool Offset_Event(SDL_Event event);

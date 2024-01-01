@@ -19,9 +19,10 @@ Engine::Engine(int ScreenWidth, int ScreenHeight, int CellsWidth, int CellsHeigh
 }
 
 bool Engine::Quit_Event(SDL_Event event) {
-    if (event.type == SDL_QUIT || (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE))
+    if (event.type == SDL_QUIT || (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE)) {
+        isRunning = false;
         return true;
-    else
+    } else
         return false;
 }
 
@@ -34,17 +35,13 @@ void Engine::Keys_Event(SDL_Event event) {
 
     if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_c)
         Full_Cell = !Full_Cell;
-}
-
-void Engine::Generation_Pause_Event(SDL_Event event) {
+    
     if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_SPACE)
         Generation_Pause2 = !Generation_Pause2;
 }
 
 bool Engine::Scale_Event(SDL_Event event) {
     if (event.type == SDL_MOUSEWHEEL) {
-        frameDelay = 1500 / FPS;
-
         if (event.wheel.y > 0 && (round(10 * Scale_Factor) + 2) <= round(10 * MAX_SCALE)) {
             Scale_Factor += 0.2f;
 
@@ -77,8 +74,6 @@ bool Engine::Offset_Event(SDL_Event event) {
         isDragging_LMB = false;
         Generation_Pause1 = false;
     } else if (event.type == SDL_MOUSEMOTION && isDragging_LMB) {
-        frameDelay = 1500 / FPS;
-
         if (Number_of_Cells_in_Width * (CELL_WIDTH + 1) * round(10 * Scale_Factor) + 10 * Odd_Factor_X >=
             10 * (Offset_from_Center_X + event.motion.xrel)) {
 
@@ -127,6 +122,7 @@ std::pair<int, int> Engine::Change_Cell_Event(SDL_Event event) {
                 X = floor((float)x / (CELL_WIDTH + 1)) + Number_of_Cells_in_Width;
             else
                 X = x / (CELL_WIDTH + 1) + Number_of_Cells_in_Width;
+
             if (y < 0)
                 Y = floor((float)y / (CELL_HEIGHT + 1)) + Number_of_Cells_in_Height;
             else
@@ -141,6 +137,7 @@ std::pair<int, int> Engine::Change_Cell_Event(SDL_Event event) {
                 X = floor((float)x / (CELL_WIDTH + 1)) + Number_of_Cells_in_Width;
             else
                 X = x / (CELL_WIDTH + 1) + Number_of_Cells_in_Width;
+
             if (y < 0)
                 Y = floor((float)y / (CELL_HEIGHT + 1)) + Number_of_Cells_in_Height;
             else
@@ -155,6 +152,7 @@ std::pair<int, int> Engine::Change_Cell_Event(SDL_Event event) {
                 X = floor((float)x / (CELL_WIDTH + 1)) + Number_of_Cells_in_Width;
             else
                 X = x / (CELL_WIDTH + 1) + Number_of_Cells_in_Width;
+
             if (y < 0)
                 Y = floor((float)y / (CELL_HEIGHT + 1)) + Number_of_Cells_in_Height;
             else
@@ -169,6 +167,7 @@ std::pair<int, int> Engine::Change_Cell_Event(SDL_Event event) {
                 X = floor((float)x / (CELL_WIDTH + 1)) + Number_of_Cells_in_Width;
             else
                 X = x / (CELL_WIDTH + 1) + Number_of_Cells_in_Width;
+
             if (y < 0)
                 Y = floor((float)y / (CELL_HEIGHT + 1)) + Number_of_Cells_in_Height;
             else
@@ -183,14 +182,14 @@ void Engine::Event_Handler(std::unordered_map<std::pair<int, int>, bool, pair_ha
     frameDelay = 3000 / FPS;
 
     while (SDL_PollEvent(&event)) {
-        if (Quit_Event(event)) {
-            isRunning = false;
+        if (Quit_Event(event))
             break;
-        }
+
         Keys_Event(event);
-        Generation_Pause_Event(event);
 
         if (Offset_Event(event) || Scale_Event(event)) {
+            frameDelay = 1500 / FPS;
+
             Grid_Center_X = Screen_Width / 2 + Offset_from_Center_X;
             Grid_Center_Y = Screen_Height / 2 + Offset_from_Center_Y;
 
