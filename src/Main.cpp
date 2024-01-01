@@ -6,10 +6,10 @@ int main(int argc, char* argv[]) {
 
     int Width_of_Field, Height_of_Field;
 
-    std::cout << "Input the width of the grid: ";
+    std::cout << "Input the width of the field: ";
     std::cin >> Width_of_Field;
 
-    std::cout << "Input the height of the grid: ";
+    std::cout << "Input the height of the field: ";
     std::cin >> Height_of_Field;
 
     try {
