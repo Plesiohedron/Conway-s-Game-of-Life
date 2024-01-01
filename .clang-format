@@ -1,0 +1,14 @@
+BasedOnStyle: Microsoft
+IndentWidth: 4
+UseTab: Never
+IndentCaseLabels: true
+ColumnLimit: 150
+AllowShortFunctionsOnASingleLine: Empty
+AllowShortIfStatementsOnASingleLine: false
+PointerAlignment: Left
+BraceWrapping: 
+  AfterFunction: false
+  AfterStruct: false
+BreakBeforeBraces: Attach
+SpaceInEmptyBlock: true
+AccessModifierOffset: -4
