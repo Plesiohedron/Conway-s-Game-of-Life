@@ -47,7 +47,7 @@ private:
     bool Offset_Event(SDL_Event event);
     std::pair<int, int> Change_Cell_Event(SDL_Event event);
 
-    std::pair<int, int> Current_Ceil;
+    std::pair<int, int> Current_Cell;
 
 public:
     bool isRunning = true;

@@ -35,7 +35,7 @@ void Engine::Keys_Event(SDL_Event event) {
 
     if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_c)
         Full_Cell = !Full_Cell;
-    
+
     if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_SPACE)
         Generation_Pause2 = !Generation_Pause2;
 }
@@ -203,20 +203,20 @@ void Engine::Event_Handler(std::unordered_map<std::pair<int, int>, bool, pair_ha
         if (Generation_Pause2) {
             if (event.type == SDL_MOUSEBUTTONDOWN && event.button.button == SDL_BUTTON_RIGHT) {
                 isDragging_RMB = true;
-                Current_Ceil = std::make_pair(-1, -1);
+                Current_Cell = std::make_pair(-1, -1);
             } else if (event.type == SDL_MOUSEBUTTONUP && event.button.button == SDL_BUTTON_RIGHT)
                 isDragging_RMB = false;
 
             if (isDragging_RMB) {
-                std::pair<int, int> Ceil = Change_Cell_Event(event);
+                std::pair<int, int> Cell = Change_Cell_Event(event);
 
-                if (Ceil != std::make_pair(-1, -1) && Ceil != Current_Ceil) {
-                    if (!Universe.count(Ceil))
-                        Universe[Ceil] = true;
+                if (Cell != std::make_pair(-1, -1) && Cell != Current_Cell) {
+                    if (!Universe.count(Cell))
+                        Universe[Cell] = true;
                     else
-                        Universe.erase(Ceil);
+                        Universe.erase(Cell);
 
-                    Current_Ceil = Ceil;
+                    Current_Cell = Cell;
                 }
             }
         }
