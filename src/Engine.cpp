@@ -263,7 +263,7 @@ void Engine::Draw_Grid(SDL_Renderer* Renderer) {
 
 void Engine::Draw_Cells(SDL_Renderer* Renderer, const std::unordered_map<std::pair<int, int>, bool, pair_hash>& Universe) {
     if (Generation_Pause2)
-        SDL_SetRenderDrawColor(Renderer, Pause_Cell_RGBA.r, Pause_Cell_RGBA.g, Pause_Cell_RGBA.b, Pause_Cell_RGBA.a);
+        SDL_SetRenderDrawColor(Renderer, Frozen_Cell_RGBA.r, Frozen_Cell_RGBA.g, Frozen_Cell_RGBA.b, Frozen_Cell_RGBA.a);
     else
         SDL_SetRenderDrawColor(Renderer, Cell_RGBA.r, Cell_RGBA.g, Cell_RGBA.b, Cell_RGBA.a);
 

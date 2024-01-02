@@ -20,7 +20,7 @@ private:
 
     const SDL_Color Scope_RGBA = {255, 255, 255, 255};
     const SDL_Color Cell_RGBA = {255, 255, 255, 255};
-    const SDL_Color Pause_Cell_RGBA = {0, 84, 166, 255};
+    const SDL_Color Frozen_Cell_RGBA = {0, 84, 166, 255};
     const SDL_Color Grid_RGB = {150, 150, 150};
 
     int Screen_Width = 0;
