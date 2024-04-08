@@ -19,7 +19,5 @@ In the beginning generation is paused. You can edit field by placing or removing
 When generation pause is disabled, you can only move around and scale it, change visibility of the field, and observe the progress of the game.
 During the game, you can pause generation and edit the field.
 
-If you've changed the code and want to compile it, use `mingw32-make -f MakeFile` command in current project repository.
-
 # P. S.
 If you want to destroy your PC, you're welcome, but the responsibility rests with you.
