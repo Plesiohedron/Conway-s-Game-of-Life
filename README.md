@@ -18,6 +18,3 @@ Input "True" to set the cyclic field.
 In the beginning generation is paused. You can edit field by placing or removing cells on the field when this mode is enabled.
 When generation pause is disabled, you can only move around and scale it, change visibility of the field, and observe the progress of the game.
 During the game, you can pause generation and edit the field.
-
-# P. S.
-If you want to destroy your PC, you're welcome, but the responsibility rests with you.
