@@ -1,4 +1,4 @@
-# Controls:
+# Controls
 - <kbd>**Esc**</kbd> - Close program
 - <kbd>**Z**</kbd> - Enable/Disable grid visibility
 - <kbd>**X**</kbd> - Enable/Disable scope visibility
@@ -8,7 +8,7 @@
 - <kbd>**RMB**</kbd> (Pressed) - Place/Remove cell
 - <kbd>**Mouse Wheel**</kbd> - Scale the field
 
-# Description:
+# Description
 Run `Main.exe` to open the game.
 
 Input the field sizes you want (integers from 2 to 10.000.000).
