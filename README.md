@@ -9,7 +9,7 @@
 - <kbd>**Mouse Wheel**</kbd> - Scale the field
 
 # Description
-Run `Main.exe` to open the game.
+Run `Game of Life.exe` to open the game.
 
 Input the field sizes you want (integers from 2 to 10.000.000).
 
