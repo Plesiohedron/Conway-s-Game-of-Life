@@ -2,7 +2,7 @@
 
 #include <../include/sdl/SDL.h>
 
-#include "LifeEngine.h"
+#include "Universe.h"
 
 class Engine {
 private:
@@ -16,7 +16,7 @@ private:
 
     const int BRIGHT_LINE_EVERY_N_LINES = 10;
 
-    const float MIN_SCALE = 1.0f, MAIN_SCALE = 3.0f, MAX_SCALE = 5.0f;
+    const double MIN_SCALE = 1.0, MAIN_SCALE = 3.0, MAX_SCALE = 5.0;
 
     const SDL_Color Scope_RGBA = {255, 255, 255, 255};
     const SDL_Color Cell_RGBA = {255, 255, 255, 255};
@@ -30,14 +30,17 @@ private:
     int Scaled_Grid_Width, Scaled_Grid_Height;
     int Scaled_Cell_Width, Scaled_Cell_Height;
 
-    float Offset_from_Center_X = 0, Offset_from_Center_Y = 0;
+    double Offset_from_Center_X = 0, Offset_from_Center_Y = 0;
     int Odd_Factor_X = 0, Odd_Factor_Y = 0;
 
-    float Scale_Factor = MAIN_SCALE;
+    double Scale_Factor = MAIN_SCALE;
 
     bool isDragging_LMB = false;
     bool isDragging_RMB = false;
 
+    std::pair<int, int> Current_Cell;
+
+private:
     SDL_Event event;
 
     bool Quit_Event(SDL_Event event);
@@ -47,9 +50,10 @@ private:
     bool Offset_Event(SDL_Event event);
     std::pair<int, int> Change_Cell_Event(SDL_Event event);
 
-    std::pair<int, int> Current_Cell;
-
 public:
+    Uint32 frameStart;
+    Uint32 frameTime;
+
     bool isRunning = true;
     bool Grid_isVisible = true;
     bool Scope_isVisible = true;
@@ -62,11 +66,13 @@ public:
     int frameDelay = 3000 / FPS;
     int Number_of_Cells_in_Width = 0, Number_of_Cells_in_Height = 0;
 
+    Universe* universe;
+
     Engine(int ScreenWidth, int ScreenHeight, int CellsWidth, int CellsHeight);
 
-    void Event_Handler(std::unordered_map<std::pair<int, int>, bool, pair_hash>& Universe);
+    void Event_Handler();
 
     void Draw_Grid(SDL_Renderer* Renderer);
-    void Draw_Cells(SDL_Renderer* Renderer, const std::unordered_map<std::pair<int, int>, bool, pair_hash>& Universe);
+    void Draw_Cells(SDL_Renderer* Renderer);
     void Draw_Scope(SDL_Renderer* Renderer);
 };

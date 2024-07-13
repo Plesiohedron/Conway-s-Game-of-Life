@@ -11,8 +11,8 @@ private:
     SDL_Renderer* mRenderer = NULL;
 
 public:
-    Window(const std::string& Title, int ScreenWidth, int ScreenHeight);
+    Window(const std::string& Title, const int ScreenWidth, const int ScreenHeight);
     ~Window();
 
-    void MainLoop(Engine Engine, LifeEngine Life);
+    void MainLoop(Engine& Engine);
 };

@@ -38,26 +38,29 @@ void Engine::Keys_Event(SDL_Event event) {
 
     if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_SPACE)
         Generation_Pause2 = !Generation_Pause2;
+
+    // if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_i)
+    //     std::cout << universe->chunks.size() << ' ' << frameTime << "   " << Offset_from_Center_X / (CELL_WIDTH + 1)  << ' ' << Offset_from_Center_Y / (CELL_HEIGHT + 1) << '\n';
 }
 
 bool Engine::Scale_Event(SDL_Event event) {
     if (event.type == SDL_MOUSEWHEEL) {
         if (event.wheel.y > 0 && (round(10 * Scale_Factor) + 2) <= round(10 * MAX_SCALE)) {
-            Scale_Factor += 0.2f;
+            Scale_Factor += 0.2;
 
-            Offset_from_Center_X = round(Offset_from_Center_X / (Scale_Factor - 0.2f) * Scale_Factor);
-            Offset_from_Center_Y = round(Offset_from_Center_Y / (Scale_Factor - 0.2f) * Scale_Factor);
+            Offset_from_Center_X = round(Offset_from_Center_X / (Scale_Factor - 0.2) * Scale_Factor);
+            Offset_from_Center_Y = round(Offset_from_Center_Y / (Scale_Factor - 0.2) * Scale_Factor);
 
-            Odd_Factor_X = round(Odd_Factor_X / (Scale_Factor - 0.2f) * Scale_Factor);
-            Odd_Factor_Y = round(Odd_Factor_Y / (Scale_Factor - 0.2f) * Scale_Factor);
+            Odd_Factor_X = round(Odd_Factor_X / (Scale_Factor - 0.2) * Scale_Factor);
+            Odd_Factor_Y = round(Odd_Factor_Y / (Scale_Factor - 0.2) * Scale_Factor);
         } else if (event.wheel.y < 0 && (round(10 * Scale_Factor) - 2) >= round(10 * MIN_SCALE)) {
-            Scale_Factor -= 0.2f;
+            Scale_Factor -= 0.2;
 
-            Offset_from_Center_X = round(Offset_from_Center_X / (Scale_Factor + 0.2f) * Scale_Factor);
-            Offset_from_Center_Y = round(Offset_from_Center_Y / (Scale_Factor + 0.2f) * Scale_Factor);
+            Offset_from_Center_X = round(Offset_from_Center_X / (Scale_Factor + 0.2) * Scale_Factor);
+            Offset_from_Center_Y = round(Offset_from_Center_Y / (Scale_Factor + 0.2) * Scale_Factor);
 
-            Odd_Factor_X = round(Odd_Factor_X / (Scale_Factor + 0.2f) * Scale_Factor);
-            Odd_Factor_Y = round(Odd_Factor_Y / (Scale_Factor + 0.2f) * Scale_Factor);
+            Odd_Factor_X = round(Odd_Factor_X / (Scale_Factor + 0.2) * Scale_Factor);
+            Odd_Factor_Y = round(Odd_Factor_Y / (Scale_Factor + 0.2) * Scale_Factor);
         }
 
         return true;
@@ -110,8 +113,8 @@ std::pair<int, int> Engine::Change_Cell_Event(SDL_Event event) {
     x -= Screen_Width / 2 + Offset_from_Center_X - Odd_Factor_X;
     y -= Screen_Height / 2 + Offset_from_Center_Y - Odd_Factor_Y;
 
-    x = round((float)x / Scale_Factor);
-    y = round((float)y / Scale_Factor);
+    x = round(static_cast<double>(x) / Scale_Factor);
+    y = round(static_cast<double>(y) / Scale_Factor);
 
     if (Odd_Factor_X != 0 && Odd_Factor_Y != 0) {
         if (x / (CELL_WIDTH + 1) > Number_of_Cells_in_Width || x / (CELL_WIDTH + 1) <= -1 * Number_of_Cells_in_Width ||
@@ -119,12 +122,12 @@ std::pair<int, int> Engine::Change_Cell_Event(SDL_Event event) {
             ;
         else {
             if (x < 0)
-                X = floor((float)x / (CELL_WIDTH + 1)) + Number_of_Cells_in_Width;
+                X = floor(static_cast<double>(x) / (CELL_WIDTH + 1)) + Number_of_Cells_in_Width;
             else
                 X = x / (CELL_WIDTH + 1) + Number_of_Cells_in_Width;
 
             if (y < 0)
-                Y = floor((float)y / (CELL_HEIGHT + 1)) + Number_of_Cells_in_Height;
+                Y = floor(static_cast<double>(y) / (CELL_HEIGHT + 1)) + Number_of_Cells_in_Height;
             else
                 Y = y / (CELL_HEIGHT + 1) + Number_of_Cells_in_Height;
         }
@@ -134,12 +137,12 @@ std::pair<int, int> Engine::Change_Cell_Event(SDL_Event event) {
             ;
         else {
             if (x < 0)
-                X = floor((float)x / (CELL_WIDTH + 1)) + Number_of_Cells_in_Width;
+                X = floor(static_cast<double>(x) / (CELL_WIDTH + 1)) + Number_of_Cells_in_Width;
             else
                 X = x / (CELL_WIDTH + 1) + Number_of_Cells_in_Width;
 
             if (y < 0)
-                Y = floor((float)y / (CELL_HEIGHT + 1)) + Number_of_Cells_in_Height;
+                Y = floor(static_cast<double>(y) / (CELL_HEIGHT + 1)) + Number_of_Cells_in_Height;
             else
                 Y = y / (CELL_HEIGHT + 1) + Number_of_Cells_in_Height;
         }
@@ -149,12 +152,12 @@ std::pair<int, int> Engine::Change_Cell_Event(SDL_Event event) {
             ;
         else {
             if (x < 0)
-                X = floor((float)x / (CELL_WIDTH + 1)) + Number_of_Cells_in_Width;
+                X = floor(static_cast<double>(x) / (CELL_WIDTH + 1)) + Number_of_Cells_in_Width;
             else
                 X = x / (CELL_WIDTH + 1) + Number_of_Cells_in_Width;
 
             if (y < 0)
-                Y = floor((float)y / (CELL_HEIGHT + 1)) + Number_of_Cells_in_Height;
+                Y = floor(static_cast<double>(y) / (CELL_HEIGHT + 1)) + Number_of_Cells_in_Height;
             else
                 Y = y / (CELL_HEIGHT + 1) + Number_of_Cells_in_Height;
         }
@@ -164,12 +167,12 @@ std::pair<int, int> Engine::Change_Cell_Event(SDL_Event event) {
             ;
         else {
             if (x < 0)
-                X = floor((float)x / (CELL_WIDTH + 1)) + Number_of_Cells_in_Width;
+                X = floor(static_cast<double>(x) / (CELL_WIDTH + 1)) + Number_of_Cells_in_Width;
             else
                 X = x / (CELL_WIDTH + 1) + Number_of_Cells_in_Width;
 
             if (y < 0)
-                Y = floor((float)y / (CELL_HEIGHT + 1)) + Number_of_Cells_in_Height;
+                Y = floor(static_cast<double>(y) / (CELL_HEIGHT + 1)) + Number_of_Cells_in_Height;
             else
                 Y = y / (CELL_HEIGHT + 1) + Number_of_Cells_in_Height;
         }
@@ -178,7 +181,7 @@ std::pair<int, int> Engine::Change_Cell_Event(SDL_Event event) {
     return std::make_pair(X, Y);
 }
 
-void Engine::Event_Handler(std::unordered_map<std::pair<int, int>, bool, pair_hash>& Universe) {
+void Engine::Event_Handler() {
     frameDelay = 3000 / FPS;
 
     while (SDL_PollEvent(&event)) {
@@ -210,11 +213,18 @@ void Engine::Event_Handler(std::unordered_map<std::pair<int, int>, bool, pair_ha
             if (isDragging_RMB) {
                 std::pair<int, int> Cell = Change_Cell_Event(event);
 
+                //std::cout << Cell.first << ' ' << Cell.second << '\n';
+
                 if (Cell != std::make_pair(-1, -1) && Cell != Current_Cell) {
-                    if (!Universe.count(Cell))
-                        Universe[Cell] = true;
-                    else
-                        Universe.erase(Cell);
+                    universe->InitializeChunk(Cell.first / (LifeChunk::Width - 2), Cell.second / (LifeChunk::Height - 2));
+
+                    LifeChunk& chunk = universe->chunks[{Cell.first / (LifeChunk::Width - 2), Cell.second / (LifeChunk::Height - 2)}];
+
+                    if (chunk.Get(Cell.first % (LifeChunk::Width - 2) + 1, Cell.second % (LifeChunk::Height - 2) + 1)) {
+                        chunk.Set(Cell.first % (LifeChunk::Width - 2) + 1, Cell.second % (LifeChunk::Height - 2) + 1, false);
+                    } else {
+                        chunk.Set(Cell.first % (LifeChunk::Width - 2) + 1, Cell.second % (LifeChunk::Height - 2) + 1, true);
+                    }
 
                     Current_Cell = Cell;
                 }
@@ -261,25 +271,32 @@ void Engine::Draw_Grid(SDL_Renderer* Renderer) {
     }
 }
 
-void Engine::Draw_Cells(SDL_Renderer* Renderer, const std::unordered_map<std::pair<int, int>, bool, pair_hash>& Universe) {
+void Engine::Draw_Cells(SDL_Renderer* Renderer) {
     if (Generation_Pause2)
         SDL_SetRenderDrawColor(Renderer, Frozen_Cell_RGBA.r, Frozen_Cell_RGBA.g, Frozen_Cell_RGBA.b, Frozen_Cell_RGBA.a);
     else
         SDL_SetRenderDrawColor(Renderer, Cell_RGBA.r, Cell_RGBA.g, Cell_RGBA.b, Cell_RGBA.a);
 
-    for (const auto& cell : Universe) {
-        int i = cell.first.first;
-        int j = cell.first.second;
-        int X = Grid_Center_X - Scaled_Grid_Width - Odd_Factor_X + (i + 1) * Scaled_Cell_Width,
-            Y = Grid_Center_Y - Scaled_Grid_Height - Odd_Factor_Y + (j + 1) * Scaled_Cell_Height;
+    for (int x = (-Grid_Center_X + Scaled_Grid_Width + Odd_Factor_X) / Scaled_Cell_Width - 1; x <= (Screen_Width - Grid_Center_X + Scaled_Grid_Width + Odd_Factor_X) / Scaled_Cell_Width - 1 + 1; ++x) {
+        for (int y = (-Grid_Center_Y + Scaled_Grid_Height + Odd_Factor_Y) / Scaled_Cell_Height - 1; y <= (Screen_Height - Grid_Center_Y + Scaled_Grid_Height + Odd_Factor_Y) / Scaled_Cell_Height - 1 + 1; ++y) {
+            
+            if (universe->chunks.find({x / (LifeChunk::Width - 2), y / (LifeChunk::Height - 2)}) != universe->chunks.end()) {
+                const LifeChunk& chunk = universe->chunks[{x / (LifeChunk::Width - 2), y / (LifeChunk::Height - 2)}];
 
-        if (0 <= X && X <= Screen_Width && 0 <= Y && Y <= Screen_Height) {
-            SDL_Rect cell;
-            if (Full_Cell)
-                cell = {X - Scaled_Cell_Width, Y - Scaled_Cell_Height, Scaled_Cell_Width, Scaled_Cell_Height};
-            else
-                cell = {X - Scaled_Cell_Width + 1, Y - Scaled_Cell_Height + 1, Scaled_Cell_Width - 1, Scaled_Cell_Height - 1};
-            SDL_RenderFillRect(Renderer, &cell);
+                if (chunk.Get(x % (LifeChunk::Width - 2) + 1, y % (LifeChunk::Height - 2) + 1)) {
+                    SDL_Rect cell;
+                    int X = Grid_Center_X - Scaled_Grid_Width - Odd_Factor_X + (x + 1) * Scaled_Cell_Width,
+                        Y = Grid_Center_Y - Scaled_Grid_Height - Odd_Factor_Y + (y + 1) * Scaled_Cell_Height;
+
+                    if (Full_Cell)
+                        cell = {X - Scaled_Cell_Width, Y - Scaled_Cell_Height, Scaled_Cell_Width, Scaled_Cell_Height};
+                    else
+                        cell = {X - Scaled_Cell_Width + 1, Y - Scaled_Cell_Height + 1, Scaled_Cell_Width - 1, Scaled_Cell_Height - 1};
+
+                    SDL_RenderFillRect(Renderer, &cell);
+                }
+            }
+
         }
     }
 }

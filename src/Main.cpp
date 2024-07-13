@@ -22,21 +22,22 @@ int main(int argc, char* argv[]) {
 
     if (Width_of_Field < 2)
         Width_of_Field = 2;
-    else if (Width_of_Field > 10000000)
-        Width_of_Field = 10000000;
+    else if (Width_of_Field > 10'000'000)
+        Width_of_Field = 10'000'000;
     
     if (Height_of_Field < 2)
         Height_of_Field = 2;
-    else if (Height_of_Field > 10000000)
-        Height_of_Field = 10000000;
+    else if (Height_of_Field > 10'000'000)
+        Height_of_Field = 10'000'000;
     
 
 
     try {
         Window Window("Window", 1280, 720);
         Engine Engine(1280, 720, Width_of_Field, Height_of_Field);
-        LifeEngine Life(Width_of_Field, Height_of_Field, isCyclic);
-        Window.MainLoop(Engine, Life);
+        Engine.universe = Universe::Instance(Width_of_Field, Height_of_Field, isCyclic);
+        
+        Window.MainLoop(Engine);
     } catch (std::runtime_error& error) {
         std::cout << "Fatal Error" << std::endl;
         std::cout << error.what() << std::endl;

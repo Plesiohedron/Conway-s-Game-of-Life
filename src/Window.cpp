@@ -3,7 +3,7 @@
 
 #include "Window.h"
 
-Window::Window(const std::string& Title, int ScreenWidth, int ScreenHeight) {
+Window::Window(const std::string& Title, const int ScreenWidth, const int ScreenHeight) {
 
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
         std::ostringstream Error;
@@ -36,33 +36,33 @@ Window::~Window() {
     SDL_Quit();
 }
 
-void Window::MainLoop(Engine Engine, LifeEngine Life) {
-    Uint32 frameStart;
-    int frameTime;
+void Window::MainLoop(Engine& Engine) {
 
     SDL_SetRenderDrawBlendMode(mRenderer, SDL_BLENDMODE_BLEND);
 
     while (Engine.isRunning) {
-        frameStart = SDL_GetTicks();
+        Engine.frameStart = SDL_GetTicks();
 
-        Engine.Event_Handler(Life.Universe);
+        Engine.Event_Handler();
 
         SDL_SetRenderDrawColor(mRenderer, 0, 0, 0, 0);
         SDL_RenderClear(mRenderer);
 
         if (Engine.Grid_isVisible)
             Engine.Draw_Grid(mRenderer);
-        Engine.Draw_Cells(mRenderer, Life.Universe);
+
+        Engine.Draw_Cells(mRenderer);
+
         if (Engine.Scope_isVisible)
             Engine.Draw_Scope(mRenderer);
 
         SDL_RenderPresent(mRenderer);
 
         if (!Engine.Generation_Pause1 && !Engine.Generation_Pause2)
-            Life.Universe = Life.Calculate_Next_Generation();
+            Engine.universe->CalculateNextGeneration();
 
-        frameTime = SDL_GetTicks() - frameStart;
-        if (Engine.frameDelay > frameTime)
-            SDL_Delay(Engine.frameDelay - frameTime);
+        Engine.frameTime = SDL_GetTicks() - Engine.frameStart;
+        if (Engine.frameDelay > Engine.frameTime)
+             SDL_Delay(Engine.frameDelay - Engine.frameTime);
     }
 }
