@@ -216,7 +216,9 @@ void Engine::Event_Handler() {
                 //std::cout << Cell.first << ' ' << Cell.second << '\n';
 
                 if (Cell != std::make_pair(-1, -1) && Cell != Current_Cell) {
-                    universe->InitializeChunk(Cell.first / (LifeChunk::Width - 2), Cell.second / (LifeChunk::Height - 2));
+                    if (universe->chunks.find({Cell.first / (LifeChunk::Width - 2), Cell.second / (LifeChunk::Height - 2)}) == universe->chunks.end()) {
+                        universe->InitializeChunk(Cell.first / (LifeChunk::Width - 2), Cell.second / (LifeChunk::Height - 2));
+                    }
 
                     LifeChunk& chunk = universe->chunks[{Cell.first / (LifeChunk::Width - 2), Cell.second / (LifeChunk::Height - 2)}];
 

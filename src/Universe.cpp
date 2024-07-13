@@ -15,7 +15,7 @@ void LifeChunk::Set(int x, int y, bool value) {
 bool LifeChunk::CalculateNextField() {
     bool isLivingChunk = false;
 
-    for (size_t i = 2 * LifeChunk::Width; i < std::size(currentField) - 2 * LifeChunk::Width; i += 32) {
+    for (size_t i = 2 * LifeChunk::Width; i < currentField.size() - 2 * LifeChunk::Width; i += 32) {
         __m256i topLeft = _mm256_loadu_si256(reinterpret_cast<const __m256i*>(&currentField[i - LifeChunk::Width - 1]));
         __m256i top = _mm256_loadu_si256(reinterpret_cast<const __m256i*>(&currentField[i - LifeChunk::Width]));
         __m256i topRight = _mm256_loadu_si256(reinterpret_cast<const __m256i*>(&currentField[i - LifeChunk::Width + 1]));
@@ -32,11 +32,11 @@ bool LifeChunk::CalculateNextField() {
         __m256i sum5 = _mm256_add_epi8(sum1, sum2);
         __m256i sum6 = _mm256_add_epi8(sum3, sum4);
 
-        __m256i neighbours = _mm256_add_epi8(sum5, sum6);
+        __m256i neighbors = _mm256_add_epi8(sum5, sum6);
         __m256i alive = _mm256_loadu_si256(reinterpret_cast<const __m256i*>(&currentField[i]));
 
         alive = _mm256_slli_epi64(alive, 3);
-        __m256i mask = _mm256_or_si256(alive, neighbours);
+        __m256i mask = _mm256_or_si256(alive, neighbors);
         __m256i shouldBeAlive = _mm256_shuffle_epi8(v_lookup, mask);
 
 
@@ -53,12 +53,12 @@ bool LifeChunk::CalculateNextField() {
 void LifeChunk::SwapFields() {
     std::swap(currentField, nextField);
 
-    for (size_t y = 1; y < LifeChunk::Height - 1; ++y) {
+    for (size_t y = 0; y < LifeChunk::Height; ++y) {
         currentField[LifeChunk::Width + y * LifeChunk::Width] = 0;
         currentField[LifeChunk::Width + y * LifeChunk::Width + (LifeChunk::Width - 1)] = 0;
     }
 
-    for (size_t x = 1; x < LifeChunk::Width - 1; ++x) {
+    for (size_t x = 0; x < LifeChunk::Width; ++x) {
         currentField[LifeChunk::Width + x] = 0;
         currentField[LifeChunk::Width + (LifeChunk::Height - 1) * LifeChunk::Width + x] = 0;
     }
@@ -75,7 +75,7 @@ Universe::Universe(const int cellsCountInWidth, const int cellsCountInHeight, co
 
 
 void Universe::InitializeChunk(int x, int y) {
-    chunks.insert({{x, y}, LifeChunk()});
+    chunks.emplace(std::make_pair(x, y), LifeChunk());
     chunksToDelete[{x, y}] = false;
 }
 
@@ -391,14 +391,14 @@ void Universe::ThreadFunction_CalculateChunk(const std::vector<std::pair<int, in
             }
         } else if (argument.first + 1 == ChunksCountInWidth) {
             if (WidthFromEdge != LifeChunk::Width) {
-                for (size_t y = 0; y <= HeightFromEdge + 1; ++y) {
+                for (size_t y = 0; y < LifeChunk::Height; ++y) {
                     chunks[argument].currentField[LifeChunk::Width + y * LifeChunk::Width + (WidthFromEdge + 1)] = 0;
                     chunks[argument].currentField[LifeChunk::Width + y * LifeChunk::Width + (WidthFromEdge + 2)] = 0;
                 }
             }
         } else if (argument.second + 1 == ChunksCountInHeight) {
             if (HeightFromEdge != LifeChunk::Height) {
-                for (size_t x = 0; x <= WidthFromEdge + 1; ++x) {
+                for (size_t x = 0; x < LifeChunk::Width; ++x) {
                     chunks[argument].currentField[LifeChunk::Width + (HeightFromEdge + 1) * LifeChunk::Width + x] = 0;
                     chunks[argument].currentField[LifeChunk::Width + (HeightFromEdge + 2) * LifeChunk::Width + x] = 0;
                 }

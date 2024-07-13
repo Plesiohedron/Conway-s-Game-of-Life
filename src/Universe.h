@@ -11,10 +11,9 @@ public:
     static const size_t Height = 512 + 2;
 
     std::vector<uint8_t> currentField;
-
-private:
     std::vector<uint8_t> nextField;
 
+private:
     static constexpr uint8_t lookup[32] = {
         0, 0, 0, 1, 0, 0, 0, 0,
         0, 0, 1, 1, 0, 0, 0, 0,
