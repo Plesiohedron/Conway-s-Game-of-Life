@@ -9,11 +9,11 @@
 - <kbd>**Mouse Wheel**</kbd> - Scale the field
 
 # Description
-Run `Game of Life.exe` to open the game.
+Run in console `./Game of Life.exe [width] [height] [cyclicity]` to open the game.
 
 Input the field sizes you want (integers from 2 to 10.000.000).
 
-Input "True" to set the cyclic field.
+Input "true" to set the cyclic field or "false" otherwise.
 
 In the beginning generation is paused. You can edit field by placing or removing cells on the field when this mode is enabled.
 When generation pause is disabled, you can only move around and scale it, change visibility of the field, and observe the progress of the game.
