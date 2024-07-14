@@ -1,46 +1,61 @@
 #include <iostream>
+#include <sstream>
 
 #include "Window.h"
 
-int main(int argc, char* argv[]) {
-
-    int Width_of_Field = 2, Height_of_Field = 2;
-    bool isCyclic = false;
-    std::string s = "huh?";
-
-    std::cout << "Input the width of the field: ";
-    std::cin >> Width_of_Field;
-
-    std::cout << "Input the height of the field: ";
-    std::cin >> Height_of_Field;
-
-    std::cout << "The cyclicity of the field: ";
-    std::cin >> s;
-
-    if (s == "True")
-        isCyclic = true;
-
-    if (Width_of_Field < 2)
-        Width_of_Field = 2;
-    else if (Width_of_Field > 10'000'000)
-        Width_of_Field = 10'000'000;
-    
-    if (Height_of_Field < 2)
-        Height_of_Field = 2;
-    else if (Height_of_Field > 10'000'000)
-        Height_of_Field = 10'000'000;
-    
-
+int main(int argc, char* argv[]) { 
 
     try {
+        std::istringstream iss;
+        int Width_of_Field, Height_of_Field;
+        bool isCyclic;
+
+        if (argc > 4) {
+            throw std::runtime_error{"Wrong input: too much arguments!"};
+        } else if (argc < 4) {
+            throw std::runtime_error{"Wrong input: too few arguments!"};
+        }
+
+        iss = std::istringstream{argv[1]};
+        iss >> std::noskipws >> Width_of_Field;
+        if (!iss.eof() || iss.fail()) {
+            throw std::runtime_error{"Wrong crop width input!"};
+        } else if (Width_of_Field < 2) {
+            throw std::runtime_error{"Wrong field width input: the value is too small!\n Acceptable values are integers from 2 to 10.000.000"};
+        } else if (Width_of_Field > 10'000'000) {
+            throw std::runtime_error{"Wrong field width input: the value is too large!\n Acceptable values are integers from 2 to 10.000.000"};
+        }
+
+        iss = std::istringstream{argv[2]};
+        iss >> std::noskipws >> Height_of_Field;
+        if (!iss.eof() || iss.fail()) {
+            throw std::runtime_error{"Wrong crop height input!"};
+        } else if (Height_of_Field < 2) {
+            throw std::runtime_error{"Wrong field height input: the value is too small!\n Acceptable values are integers from 2 to 10.000.000"};
+        } else if (Height_of_Field > 10'000'000) {
+            throw std::runtime_error{"Wrong field height input: the value is too large!\n Acceptable values are integers from 2 to 10.000.000"};
+        }
+
+        std::string str;
+        iss = std::istringstream{argv[3]};
+        iss >> std::noskipws >> str;
+        if (!iss.eof() || iss.fail()) {
+            throw std::runtime_error{"Wrong boolean input!"};
+        } else if (str == "true") {
+            isCyclic = true;
+        } else if (str == "false") {
+            isCyclic = false;
+        } else {
+            throw std::runtime_error{"Wrong boolean input!"};
+        }
+
         Window Window("Window", 1280, 720);
         Engine Engine(1280, 720, Width_of_Field, Height_of_Field);
         Engine.universe = Universe::Instance(Width_of_Field, Height_of_Field, isCyclic);
         
         Window.MainLoop(Engine);
     } catch (std::runtime_error& error) {
-        std::cout << "Fatal Error" << std::endl;
-        std::cout << error.what() << std::endl;
+        std::cerr << "Fatal Error\n" << error.what() << std::endl;
         return -1;
     }
 
