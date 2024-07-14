@@ -291,7 +291,7 @@ void Engine::Draw_Cells(SDL_Renderer* Renderer) {
                         Y = Grid_Center_Y - Scaled_Grid_Height - Odd_Factor_Y + (y + 1) * Scaled_Cell_Height;
 
                     if (Full_Cell)
-                        cell = {X - Scaled_Cell_Width, Y - Scaled_Cell_Height, Scaled_Cell_Width, Scaled_Cell_Height};
+                        cell = {X - Scaled_Cell_Width, Y - Scaled_Cell_Height, Scaled_Cell_Width + 1, Scaled_Cell_Height + 1};
                     else
                         cell = {X - Scaled_Cell_Width + 1, Y - Scaled_Cell_Height + 1, Scaled_Cell_Width - 1, Scaled_Cell_Height - 1};
 
