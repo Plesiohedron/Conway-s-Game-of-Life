@@ -1,4 +1,4 @@
-#include <Universe.h>
+#include "Universe.h"
 
 const __m256i LifeChunk::v_lookup = _mm256_loadu_si256(reinterpret_cast<const __m256i*>(LifeChunk::lookup));
 
@@ -63,6 +63,8 @@ void LifeChunk::SwapFields() {
         currentField[LifeChunk::Width + (LifeChunk::Height - 1) * LifeChunk::Width + x] = 0;
     }
 }
+
+const int Universe::ThreadsCount = std::thread::hardware_concurrency() - 1;
 
 Universe::Universe(const int cellsCountInWidth, const int cellsCountInHeight, const bool cyclicity): 
     CellsCountInWidth(cellsCountInWidth), CellsCountInHeight(cellsCountInHeight), isCyclic(cyclicity), argumentsList(ThreadsCount), countList(ThreadsCount) {

@@ -59,7 +59,7 @@ public:
     std::unordered_map<std::pair<int, int>, LifeChunk, PairHash> chunks;
 
 private:
-    static constexpr int ThreadsCount = 6;
+    static const int ThreadsCount;
 
     std::vector<std::thread> threads;
     std::vector<std::vector<std::pair<int, int>>> argumentsList;
